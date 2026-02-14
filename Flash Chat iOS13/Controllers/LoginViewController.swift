@@ -8,28 +8,28 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseCore
 
 class LoginViewController: UIViewController {
-
+    
     @IBOutlet weak var emailTextfield: UITextField!
     @IBOutlet weak var passwordTextfield: UITextField!
     
-
     @IBAction func loginPressed(_ sender: UIButton) {
         
-        if let email = emailTextfield.text, let password = passwordTextfield.text {
+        print("🔥 BUNDLE ID:", Bundle.main.bundleIdentifier ?? "no bundle")
+        
+        if let email = emailTextfield.text,
+           let password = passwordTextfield.text {
+            
             Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
-                guard let strongSelf = self else { return }
-                if let e = error {
-                     print(e)
+                
+                if let error = error {
+                    print(error)
                 } else {
                     self?.performSegue(withIdentifier: K.loginSegue, sender: self)
-                    
                 }
             }
         }
-       
-        
     }
-    
 }
